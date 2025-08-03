@@ -2,16 +2,23 @@ package com.beto.sip.domain.user;
 
 import com.beto.sip.domain.shared.AuditableEntity;
 import com.beto.sip.domain.user.vo.*;
+
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @Getter
-@SuperBuilder
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@SuperBuilder(toBuilder = true)
 public class User extends AuditableEntity {
-    private final UserId id;
-    private final Username username;
-    private final Email email;
-    private final PasswordHash passwordHash;
-    private final String status;
+    private UserId id;
+    private Username username;
+    private Email email;
+    private PasswordHash passwordHash;
+    private String status;
 
 }

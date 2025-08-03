@@ -7,7 +7,6 @@ import java.time.Instant;
 
 @Entity
 @Table(name = "users")
-@Where(clause = "status = 'ACTIVE'")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -34,8 +33,14 @@ public class UserEntity {
     @Column(nullable = false, updatable = false)
     private Instant createdAt;
 
-    @Column(nullable = false)
+    @Column(nullable = false, updatable = false)
+    private Long createdBy;
+
+    @Column
     private Instant updatedAt;
+
+    @Column
+    private Long updatedBy;
 
     @PrePersist
     public void prePersist() {

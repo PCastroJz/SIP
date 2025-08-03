@@ -1,16 +1,16 @@
 package com.beto.sip.application.user.dto;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import jakarta.validation.constraints.NotNull;
 
 @Getter
 @RequiredArgsConstructor
-public class UpdateUserCommand {
+public class UpdateUserPasswordCommand {
     @NotNull
     private final Long id;
-    private final String username;
-    private final String status;
+    @NotNull
+    private final String password;
     @NotNull
     private final Long updatedBy;
 }

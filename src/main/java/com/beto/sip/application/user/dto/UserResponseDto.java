@@ -12,5 +12,7 @@ public class UserResponseDto {
     private final String email;
     private final String status;
     private final Instant createdAt;
+    private final Long createdBy;
     private final Instant updatedAt;
+    private final Long updatedBy;
 }

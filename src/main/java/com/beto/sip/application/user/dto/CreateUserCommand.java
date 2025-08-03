@@ -15,4 +15,7 @@ public class CreateUserCommand {
     private final String email;
     @NotBlank
     private final String password;
+    @NotBlank
+    private final Long createdBy;
+
 }

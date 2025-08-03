@@ -11,4 +11,5 @@ public class CreateUserRequest {
     @NotBlank private String username;
     @Email @NotBlank private String email;
     @NotBlank private String password;
+    @NotBlank private Long createdBy;
 }
