@@ -30,6 +30,7 @@ public class UserApplicationServiceImpl implements UserApplicationService {
     @Override
     public ApiResponse<UserResponseDto> createUser(CreateUserCommand cmd) {
         log.info("Attempting to create user with username: {}", cmd.getUsername());
+        log.info("User: {} attempting creation", cmd.getCreatedBy());
 
         if (userRepo.existsByUsername(cmd.getUsername())) {
             log.warn("User creation failed: username {} already exists", cmd.getUsername());

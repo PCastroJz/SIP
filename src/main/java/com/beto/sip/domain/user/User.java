@@ -1,5 +1,8 @@
 package com.beto.sip.domain.user;
 
+import java.util.List;
+
+import com.beto.sip.domain.auth.Role;
 import com.beto.sip.domain.shared.AuditableEntity;
 import com.beto.sip.domain.user.vo.*;
 
@@ -20,5 +23,5 @@ public class User extends AuditableEntity {
     private Email email;
     private PasswordHash passwordHash;
     private String status;
-
+    private List<Role> roles;
 }

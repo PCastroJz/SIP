@@ -30,16 +30,16 @@ public class UserEntity {
     @Column(nullable = false, length = 10)
     private String status;
 
-    @Column(nullable = false, updatable = false)
+    @Column(name = "created_at", nullable = false)
     private Instant createdAt;
 
-    @Column(nullable = false, updatable = false)
+    @Column(name = "created_by", nullable = false)
     private Long createdBy;
 
-    @Column
+    @Column(name = "updated_at")
     private Instant updatedAt;
 
-    @Column
+    @Column(name = "updated_by")
     private Long updatedBy;
 
     @PrePersist

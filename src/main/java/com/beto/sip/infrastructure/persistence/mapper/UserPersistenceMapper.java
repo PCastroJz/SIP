@@ -15,7 +15,9 @@ public class UserPersistenceMapper {
                 .passwordHash(PasswordHash.of(e.getPasswordHash()))
                 .status(e.getStatus())
                 .createdAt(e.getCreatedAt())
+                .createdBy(e.getCreatedBy())
                 .updatedAt(e.getUpdatedAt())
+                .updatedBy(e.getUpdatedBy())
                 .build();
     }
 
@@ -27,7 +29,9 @@ public class UserPersistenceMapper {
                 .passwordHash(u.getPasswordHash().getValue())
                 .status(u.getStatus())
                 .createdAt(u.getCreatedAt())
+                .createdBy(u.getCreatedBy())
                 .updatedAt(u.getUpdatedAt())
+                .updatedBy(u.getUpdatedBy())
                 .build();
     }
 }

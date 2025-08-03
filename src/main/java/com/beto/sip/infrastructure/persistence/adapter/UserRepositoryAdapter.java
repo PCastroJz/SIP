@@ -1,10 +1,12 @@
-package com.beto.sip.infrastructure.persistence.repository;
+package com.beto.sip.infrastructure.persistence.adapter;
 
 import com.beto.sip.domain.user.User;
 import com.beto.sip.domain.user.repository.UserRepositoryPort;
 import com.beto.sip.domain.user.vo.UserId;
 import com.beto.sip.infrastructure.persistence.entity.UserEntity;
 import com.beto.sip.infrastructure.persistence.mapper.UserPersistenceMapper;
+import com.beto.sip.infrastructure.persistence.repository.UserJpaRepository;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import java.util.List;

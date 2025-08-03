@@ -8,9 +8,9 @@ CREATE TABLE
         email VARCHAR(150) NOT NULL UNIQUE,
         status VARCHAR(20) NOT NULL DEFAULT 'ACTIVE',
         created_at TIMESTAMPTZ NOT NULL DEFAULT NOW (),
-        created_by BIGINT NULL REFERENCES users (id),
-        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW (),
-        updated_by BIGINT NULL REFERENCES users (id)
+        created_by BIGINT REFERENCES users (id),
+        updated_at TIMESTAMPTZ,
+        updated_by BIGINT REFERENCES users (id)
     );
 
 CREATE INDEX idx_users_status ON users (status);
@@ -26,9 +26,9 @@ CREATE TABLE
         user_id BIGINT NULL REFERENCES users (id),
         status VARCHAR(20) NOT NULL DEFAULT 'ACTIVE',
         created_at TIMESTAMPTZ NOT NULL DEFAULT NOW (),
-        created_by BIGINT NULL REFERENCES users (id),
-        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW (),
-        updated_by BIGINT NULL REFERENCES users (id)
+        created_by BIGINT REFERENCES users (id),
+        updated_at TIMESTAMPTZ,
+        updated_by BIGINT REFERENCES users (id)
     );
 
 CREATE INDEX idx_employees_status ON employees (status);
@@ -41,9 +41,9 @@ CREATE TABLE
         description VARCHAR(200) NULL,
         status VARCHAR(20) NOT NULL DEFAULT 'ACTIVE',
         created_at TIMESTAMPTZ NOT NULL DEFAULT NOW (),
-        created_by BIGINT NULL REFERENCES users (id),
-        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW (),
-        updated_by BIGINT NULL REFERENCES users (id)
+        created_by BIGINT REFERENCES users (id),
+        updated_at TIMESTAMPTZ,
+        updated_by BIGINT REFERENCES users (id)
     );
 
 CREATE INDEX idx_roles_status ON roles (status);
@@ -54,13 +54,13 @@ CREATE TABLE
         id BIGSERIAL PRIMARY KEY,
         name VARCHAR(100) NOT NULL,
         code VARCHAR(100) NOT NULL UNIQUE,
-        description TEXT NULL,
-        parent_permission_id BIGINT NULL REFERENCES permissions (id),
+        description TEXT,
+        parent_permission_id BIGINT REFERENCES permissions (id),
         status VARCHAR(20) NOT NULL DEFAULT 'ACTIVE',
         created_at TIMESTAMPTZ NOT NULL DEFAULT NOW (),
-        created_by BIGINT NULL REFERENCES users (id),
-        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW (),
-        updated_by BIGINT NULL REFERENCES users (id)
+        created_by BIGINT REFERENCES users (id),
+        updated_at TIMESTAMPTZ,
+        updated_by BIGINT REFERENCES users (id)
     );
 
 CREATE INDEX idx_permissions_status ON permissions (status);
@@ -74,9 +74,9 @@ CREATE TABLE
         role_id BIGINT NOT NULL REFERENCES roles (id) ON DELETE CASCADE,
         status VARCHAR(20) NOT NULL DEFAULT 'ACTIVE',
         created_at TIMESTAMPTZ NOT NULL DEFAULT NOW (),
-        created_by BIGINT NULL REFERENCES users (id),
-        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW (),
-        updated_by BIGINT NULL REFERENCES users (id),
+        created_by BIGINT REFERENCES users (id),
+        updated_at TIMESTAMPTZ,
+        updated_by BIGINT REFERENCES users (id),
         PRIMARY KEY (user_id, role_id)
     );
 
@@ -89,9 +89,9 @@ CREATE TABLE
         permission_id BIGINT NOT NULL REFERENCES permissions (id) ON DELETE CASCADE,
         status VARCHAR(20) NOT NULL DEFAULT 'ACTIVE',
         created_at TIMESTAMPTZ NOT NULL DEFAULT NOW (),
-        created_by BIGINT NULL REFERENCES users (id),
-        updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW (),
-        updated_by BIGINT NULL REFERENCES users (id),
+        created_by BIGINT REFERENCES users (id),
+        updated_at TIMESTAMPTZ,
+        updated_by BIGINT REFERENCES users (id),
         PRIMARY KEY (role_id, permission_id)
     );
 
