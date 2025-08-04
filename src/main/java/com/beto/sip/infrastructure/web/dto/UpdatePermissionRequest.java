@@ -14,5 +14,4 @@ public class UpdatePermissionRequest {
     private String code;
     private String description;
     private String status;
-    private Long updatedBy;
 }

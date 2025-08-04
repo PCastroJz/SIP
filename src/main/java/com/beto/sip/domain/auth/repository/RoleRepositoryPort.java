@@ -9,9 +9,13 @@ public interface RoleRepositoryPort {
 
     Optional<Role> findById(Long id);
 
+    Optional<Role> findByName(String name);
+
     List<Role> findByUserId(Long userId);
 
     List<Role> findAll();
 
     void assignRoleToUser(Long userId, Long roleId, Long createdBy);
+
+    void unassignRoleFromUser(Long userId, Long roleId);
 }

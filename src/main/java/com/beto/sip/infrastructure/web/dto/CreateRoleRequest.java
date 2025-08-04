@@ -11,6 +11,4 @@ public class CreateRoleRequest {
     private String name;
 
     private String description;
-
-    private Long createdBy;
 }

@@ -21,7 +21,4 @@ public class CreateEmployeeRequest {
     private String position;
 
     private Long userId;
-
-    @NotNull(message = "CreatedBy is required")
-    private Long createdBy;
 }

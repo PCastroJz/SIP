@@ -13,5 +13,4 @@ public class UpdateRoleRequest {
     private String name;
     private String description;
     private String status;
-    private Long updatedBy;
 }

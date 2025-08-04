@@ -12,6 +12,4 @@ public class AssignRoleToUserRequest {
 
     @NotNull(message = "Role ID is required")
     private Long roleId;
-
-    private Long createdBy;
 }

@@ -15,5 +15,4 @@ public class CreatePermissionRequest {
 
     private String description;
     private Long parentPermissionId;
-    private Long createdBy;
 }

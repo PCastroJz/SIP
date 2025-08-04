@@ -14,7 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.beto.sip.application.employee.dto.EmployeeResponseDto;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
 import com.beto.sip.application.employee.service.EmployeeApplicationService;
+import com.beto.sip.infrastructure.security.CustomUserPrincipal;
 import com.beto.sip.infrastructure.web.dto.ApiResponse;
 import com.beto.sip.infrastructure.web.dto.CreateEmployeeRequest;
 import com.beto.sip.infrastructure.web.dto.UpdateEmployeeRequest;
@@ -31,22 +36,34 @@ public class EmployeeController {
     private final EmployeeRestMapper restMapper;
 
     @PostMapping
+    @PreAuthorize("hasAuthority('EMPLOYEE_CREATE') or hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     public ApiResponse<EmployeeResponseDto> create(@Validated @RequestBody CreateEmployeeRequest req) {
-        return service.createEmployee(restMapper.toCommand(req));
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserPrincipal principal = (CustomUserPrincipal) auth.getPrincipal();
+
+        Long createdBy = principal.getId();
+        return service.createEmployee(restMapper.toCommand(req, createdBy));
     }
 
     @PutMapping
+    @PreAuthorize("hasAuthority('EMPLOYEE_UPDATE') or hasRole('ADMIN')")
     public ApiResponse<EmployeeResponseDto> update(@Validated @RequestBody UpdateEmployeeRequest req) {
-        return service.updateEmployee(restMapper.toCommand(req));
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserPrincipal principal = (CustomUserPrincipal) auth.getPrincipal();
+
+        Long updatedBy = principal.getId();
+        return service.updateEmployee(restMapper.toCommand(req, updatedBy));
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('EMPLOYEE_VIEW') or hasRole('ADMIN')")
     public ApiResponse<EmployeeResponseDto> get(@PathVariable Long id) {
         return service.getById(id);
     }
 
     @GetMapping
+    @PreAuthorize("hasAuthority('EMPLOYEE_VIEW') or hasRole('ADMIN')")
     public ApiResponse<List<EmployeeResponseDto>> list() {
         return service.listEmployees();
     }

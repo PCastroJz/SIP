@@ -7,17 +7,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class EmployeeRestMapper {
 
-    public CreateEmployeeCommand toCommand(CreateEmployeeRequest req) {
+    public CreateEmployeeCommand toCommand(CreateEmployeeRequest req, Long createdBy) {
         return new CreateEmployeeCommand(
                 req.getFirstName(),
                 req.getLastName(),
                 req.getEmployeeNumber(),
                 req.getPosition(),
                 req.getUserId(),
-                req.getCreatedBy());
+                createdBy);
     }
 
-    public UpdateEmployeeCommand toCommand(UpdateEmployeeRequest req) {
+    public UpdateEmployeeCommand toCommand(UpdateEmployeeRequest req, Long updatedBy) {
         return new UpdateEmployeeCommand(
                 req.getId(),
                 req.getFirstName(),
@@ -26,6 +26,6 @@ public class EmployeeRestMapper {
                 req.getPosition(),
                 req.getStatus(),
                 req.getUserId(),
-                req.getUpdatedBy());
+                updatedBy);
     }
 }

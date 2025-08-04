@@ -5,11 +5,17 @@ import com.beto.sip.application.auth.service.RolePermissionApplicationService;
 import com.beto.sip.domain.auth.Role;
 import com.beto.sip.domain.auth.Permission;
 import com.beto.sip.domain.auth.repository.RoleRepositoryPort;
+import com.beto.sip.domain.user.exception.UserAlreadyExistsException;
 import com.beto.sip.domain.auth.repository.PermissionRepositoryPort;
 import com.beto.sip.infrastructure.web.dto.ApiResponse;
 import com.beto.sip.infrastructure.web.dto.ErrorCode;
+
+import jakarta.transaction.Transactional;
+
 import com.beto.sip.domain.auth.exception.RoleNotFoundException;
+import com.beto.sip.domain.auth.exception.PermissionAlreadyExistsException;
 import com.beto.sip.domain.auth.exception.PermissionNotFoundException;
+import com.beto.sip.domain.auth.exception.RoleAlreadyExistsException;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +38,11 @@ public class RolePermissionApplicationServiceImpl implements RolePermissionAppli
     public ApiResponse<RoleResponseDto> createRole(CreateRoleCommand cmd) {
         log.info("Attempting to create role with name: {}", cmd.getName());
 
+        if (roleRepo.findByName(cmd.getName()).isPresent()) {
+            log.warn("Role creation failed: role {} already exists", cmd.getName());
+            throw new RoleAlreadyExistsException("Role already exists");
+        }
+
         Role role = Role.builder()
                 .name(cmd.getName())
                 .description(cmd.getDescription())
@@ -48,6 +59,12 @@ public class RolePermissionApplicationServiceImpl implements RolePermissionAppli
     @Override
     public ApiResponse<PermissionResponseDto> createPermission(CreatePermissionCommand cmd) {
         log.info("Attempting to create permission with code: {}", cmd.getCode());
+
+        if (permRepo.findByCode(cmd.getCode()).isPresent()) {
+            log.warn("Permission creation failed: permission {} already exists", cmd.getCode());
+            throw new PermissionAlreadyExistsException("Permission already exists");
+        }
+
 
         Permission permission = Permission.builder()
                 .name(cmd.getName())
@@ -72,10 +89,25 @@ public class RolePermissionApplicationServiceImpl implements RolePermissionAppli
     }
 
     @Override
+    @Transactional
+    public ApiResponse<Void> unassignRoleFromUser(UnassignRoleFromUserCommand cmd) {
+        log.info("Deassigning role {} from user {}", cmd.getRoleId(), cmd.getUserId());
+        roleRepo.unassignRoleFromUser(cmd.getUserId(), cmd.getRoleId());
+        return ApiResponse.success(null, "ROLE_DEASSIGNED_FROM_USER", HttpStatus.OK);
+    }
+
+    @Override
     public ApiResponse<Void> assignPermissionToRole(AssignPermissionToRoleCommand cmd) {
         log.info("Assigning permission {} to role {}", cmd.getPermissionId(), cmd.getRoleId());
         permRepo.assignPermissionToRole(cmd.getRoleId(), cmd.getPermissionId(), cmd.getCreatedBy());
         return ApiResponse.success(null, "PERMISSION_ASSIGNED_TO_ROLE", HttpStatus.OK);
+    }
+
+    @Override
+    public ApiResponse<Void> unassignPermissionFromRole(UnassignPermissionFromRoleCommand cmd) {
+        log.info("Deassigning permission {} from role {}", cmd.getPermissionId(), cmd.getRoleId());
+        permRepo.unassignPermissionFromRole(cmd.getRoleId(), cmd.getPermissionId());
+        return ApiResponse.success(null, "PERMISSION_DEASSIGNED_FROM_ROLE", HttpStatus.OK);
     }
 
     @Override

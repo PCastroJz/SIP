@@ -16,5 +16,4 @@ public class UpdateEmployeeRequest {
     private String position;
     private String status;
     private Long userId;
-    private Long updatedBy;
 }

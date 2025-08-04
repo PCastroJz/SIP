@@ -29,6 +29,11 @@ public class RoleRepositoryAdapter implements RoleRepositoryPort {
     }
 
     @Override
+    public Optional<Role> findByName(String name) {
+        return roleRepo.findByName(name).map(mapper::toDomain);
+    }
+
+    @Override
     public Optional<Role> findById(Long id) {
         return roleRepo.findById(id).map(mapper::toDomain);
     }
@@ -60,4 +65,10 @@ public class RoleRepositoryAdapter implements RoleRepositoryPort {
                         .createdBy(createdBy)
                         .build());
     }
+
+    @Override
+    public void unassignRoleFromUser(Long userId, Long roleId) {
+        userRoleRepo.deleteByUserIdAndRoleId(userId, roleId);
+    }
+
 }

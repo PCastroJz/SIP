@@ -1,6 +1,7 @@
 package com.beto.sip.infrastructure.persistence.adapter;
 
 import com.beto.sip.domain.auth.Permission;
+import com.beto.sip.domain.auth.Role;
 import com.beto.sip.domain.auth.repository.PermissionRepositoryPort;
 import com.beto.sip.infrastructure.persistence.entity.RolePermissionEntity;
 import com.beto.sip.infrastructure.persistence.mapper.PermissionPersistenceMapper;
@@ -34,6 +35,11 @@ public class PermissionRepositoryAdapter implements PermissionRepositoryPort {
     }
 
     @Override
+    public Optional<Permission> findByCode(String code) {
+        return permRepo.findByCode(code).map(mapper::toDomain);
+    }
+
+    @Override
     public List<Permission> findByRoleId(Long roleId) {
         return permRepo.findPermissionsByRoleId(roleId)
                 .stream()
@@ -59,5 +65,10 @@ public class PermissionRepositoryAdapter implements PermissionRepositoryPort {
                         .createdAt(Instant.now())
                         .createdBy(createdBy)
                         .build());
+    }
+
+    @Override
+    public void unassignPermissionFromRole(Long roleId, Long permissionId) {
+        rolePermRepo.deleteByRoleIdAndPermissionId(roleId, permissionId);
     }
 }

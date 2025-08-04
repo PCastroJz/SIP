@@ -12,6 +12,4 @@ public class UpdatePasswordRequest {
     private Long id;
     @NotNull
     private String password;
-    @NotNull
-    private Long updatedBy;
 }

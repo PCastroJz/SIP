@@ -11,5 +11,4 @@ public class UpdateUserRequest {
     private Long id;
     private String username;
     private String status;
-    private Long updatedBy;
 }
